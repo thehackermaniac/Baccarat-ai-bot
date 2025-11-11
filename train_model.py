@@ -8,7 +8,7 @@ import joblib
 df = pd.read_csv("baccarat_features.csv")
 
 # Define features (X) and target (y)
-X = df[["streak", "player_ratio", "banker_ratio", "tie_ratio"]]
+X = df[["streak", "player_ratio", "banker_ratio"]]
 y = df["winner"]
 
 # Split data into training and testing sets

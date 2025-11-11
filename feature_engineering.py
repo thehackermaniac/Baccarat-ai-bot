@@ -1,6 +1,9 @@
 import pandas as pd
 
-df = pd.read_csv('baccarat_results_1000000.csv')
+df = pd.read_csv('baccarat_results_generated.csv')
+
+# Filter out Tie results
+df = df[df['winner'] != 'Tie']
 
 # Calculate winning streaks
 def calculate_streaks(df):
@@ -22,13 +25,11 @@ df['streak'] = calculate_streaks(df)
 # Calculate winning ratios (example: simple rolling ratio)
 df['player_win'] = (df['winner'] == 'Player').astype(int)
 df['banker_win'] = (df['winner'] == 'Banker').astype(int)
-df['tie'] = (df['winner'] == 'Tie').astype(int)
 
 # Rolling window for ratios (e.g., last 10 games)
 window_size = 10
 df['player_ratio'] = df['player_win'].rolling(window=window_size).mean()
 df['banker_ratio'] = df['banker_win'].rolling(window=window_size).mean()
-df['tie_ratio'] = df['tie'].rolling(window=window_size).mean()
 
 # Fill NaN values created by rolling window (e.g., with 0 or mean)
 df = df.fillna(0)
